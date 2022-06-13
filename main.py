@@ -7,7 +7,6 @@ app = Flask(__name__)
 
 model = joblib.load("property_v0.model")
 
-
 def fe(df):
     df["area_num"] = df["area"].map(lambda x: x.split("m")[0].replace(" ", "").replace(",", ".")).astype("float")
     df["area_num_log"] = np.log(df["area_num"])
