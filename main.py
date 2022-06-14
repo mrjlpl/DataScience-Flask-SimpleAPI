@@ -1,7 +1,7 @@
-from flask import Flask
 import joblib
-import pandas as pd
 import numpy as np
+import pandas as pd
+from flask import Flask
 
 app = Flask(__name__)
 
@@ -36,8 +36,12 @@ def fe(df):
     return df
 
 
-@app.route('/predict/<string:area>/<int:rooms>/<string:location>')
-def get_forecast(area, rooms, location):
+@app.route('/predict1/<string:area>/<string:rooms>/<string:location>')
+def get_forecast_1(area, rooms, location):
+    return("area={}, rooms={}, location={}".format(area, rooms, location))
+
+@app.route('/predict2/<string:area>/<int:rooms>/<string:location>')
+def get_forecast_2(area, rooms, location):
     df = pd.DataFrame([{
         "area": "12",
         "rooms": 1,
@@ -54,6 +58,5 @@ def get_forecast(area, rooms, location):
 
     return ("area={}, rooms={}, location={}, y_pred={}".format(area, rooms, location, y_pred))
 
-
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=8051):q!
+    app.run(host='0.0.0.0', port=8051)
