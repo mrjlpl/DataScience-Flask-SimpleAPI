@@ -1,3 +1,6 @@
+#
+# testing new GUI
+#
 import joblib
 import numpy as np
 import pandas as pd
@@ -6,6 +9,7 @@ from flask import Flask
 app = Flask(__name__)
 
 model = joblib.load("property_v0.model")
+
 
 def fe(df):
     df["area_num"] = df["area"].map(lambda x: x.split("m")[0].replace(" ", "").replace(",", ".")).astype("float")
@@ -38,7 +42,8 @@ def fe(df):
 
 @app.route('/predict1/<string:area>/<string:rooms>/<string:location>')
 def get_forecast_1(area, rooms, location):
-    return("area={}, rooms={}, location={}".format(area, rooms, location))
+    return "area={}, rooms={}, location={}".format(area, rooms, location)
+
 
 @app.route('/predict2/<string:area>/<int:rooms>/<string:location>')
 def get_forecast_2(area, rooms, location):
@@ -56,7 +61,8 @@ def get_forecast_2(area, rooms, location):
     X = df_fe[feats].values
     y_pred = model.predict(X)
 
-    return ("area={}, rooms={}, location={}, y_pred={}".format(area, rooms, location, y_pred))
+    return "area={}, rooms={}, location={}, y_pred={}".format(area, rooms, location, y_pred)
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8051)
